@@ -58,3 +58,6 @@ def inicio(request, year=datetime.now().year, month=datetime.now().strftime("%B"
     'current_year': current_year,
     'time': time,
   })
+
+def about(request):
+  return render(request, 'about.html')

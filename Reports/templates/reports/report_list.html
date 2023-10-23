@@ -2,40 +2,40 @@
 
 {% block content %} 
 
-<h1>Reportes:</h1>
+<h1 class="text-3xl font-bold mb-3">Revision de Archivos</h1>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table class="w-full text-sm text-start text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
       <tr>
-        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
           Docente
         </th>
-        <th scope="col" class="px-24 py-3 bg-gray-300">
+        <th scope="col" class="px-24 py-3 bg-gray-300 dark:text-black">
           Titulo
         </th>
-        <th scope="col" class="px-10 py-3 bg-gray-50 dark:bg-gray-800">
+        <th scope="col" class="px-10 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
           Academia
         </th>
-        <th scope="col" class="px-24 py-3 bg-gray-300">
+        <th scope="col" class="px-24 py-3 bg-gray-300 dark:text-black">
           Materia
         </th>
-        <th scope="col" class="px-8 py-3 bg-gray-50 dark:bg-gray-800">
+        <th scope="col" class="px-8 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
           Ciclo
         </th>
-        <th scope="col" class="px-6 py-3 bg-gray-300">
+        <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
           Tipo de Evidencia
         </th>
-        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
           Turno
         </th>
-        <th scope="col" class="px-6 py-3 bg-gray-300">
+        <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
           Archivo
         </th>
-        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
           Fecha
         </th>
-        <th scope="col" class="px-6 py-3 bg-gray-300">
+        <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
           Descripcion
         </th>
       </tr>
@@ -49,35 +49,35 @@
             </th>
           {% endfor %}
           
-          <td class="px-6 py-4 bg-gray-300">
+          <td class="px-6 py-4 bg-gray-300 dark:text-black">
             {{ report.titulo }}
           </td>
-          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
             {{ report.academia }}
           </td>
-          <td class="px-6 py-4 bg-gray-300">
+          <td class="px-6 py-4 bg-gray-300 dark:text-black">
             {{ report.curso }}
           </td>
-          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
             {{ report.ciclo }}
           </td>
-          <td class="px-6 py-4 bg-gray-300">
+          <td class="px-6 py-4 bg-gray-300 dark:text-black">
             {{ report.evidencia }}
           </td>
-          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
             {{ report.turno }}
           </td>
-          <td class="px-6 py-4 bg-gray-300 text-xl text-center text-orange-300">
+          <td class="px-6 py-4 bg-gray-300 text-xl text-center text-orange-400">
             <a href="">
               <i class="fa-solid fa-file fa-2xl">
                 <!-- {{ report.archivo }} -->
               </i>
             </a>
           </td>
-          <td class="px-14 py-4 bg-gray-50 dark:bg-gray-800 text-left">
+          <td class="px-14 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
             {{ report.fecha }}
           </td>
-          <td class="px-6 py-4 bg-gray-300">
+          <td class="px-6 py-4 bg-gray-300 dark:text-black">
             {{ report.descripcion }}
           </td>
         </tr>
