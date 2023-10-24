@@ -117,7 +117,7 @@ class Reporte(models.Model):
   # archivo = models.FileField(upload_to='static/files')
   fecha = models.DateField('Fecha de creación', auto_now_add=True)
   descripcion = models.TextField('Descripción', blank=True, null=True)
-  docentes = models.ManyToManyField(Docente)
+  docentes = models.ForeignKey(Docente, null=True, blank=True, on_delete=models.SET_NULL)
   jefe_departamento = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
 
   def __str__(self):

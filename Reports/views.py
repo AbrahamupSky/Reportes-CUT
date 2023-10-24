@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 import calendar
+import time
 from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Docente, Reporte
@@ -12,17 +13,33 @@ def upload_docs(request):
     form = ReportForm(request.POST)
     if form.is_valid():
       form.save()
+      time.sleep(1.5)
       return HttpResponseRedirect('/upload?submitted=True')
   else:
     form = ReportForm()
+
   if 'submitted' in request.GET:
     submitted = True
 
-  print(form.errors)
+  else:
+    error_message = "Por favor, asegúrate de llenar todos los campos del formulario."
+    return render(request, 'reports/upload_docs.html', {
+      'form': form,
+      'error_message': error_message,
+    })
 
   return render(request, 'reports/upload_docs.html', {
     'form': form,
     'submitted': submitted,
+  })
+
+def show_report(request, report_id):
+  report = Reporte.objects.get(pk=report_id)
+  form = ReportForm(request.POST or None)
+
+  return render(request, 'reports/show_report.html', {
+    'report': report,
+    'form': form,
   })
 
 def all_reports(request):

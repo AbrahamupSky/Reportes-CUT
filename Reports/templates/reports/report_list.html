@@ -5,7 +5,7 @@
 <h1 class="text-3xl font-bold mb-3">Revision de Archivos</h1>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-start text-gray-500 dark:text-gray-400">
+  <table class="w-full text-sm text-start text-gray-500 dark:text-gray-400" id="example">
     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
@@ -36,18 +36,16 @@
           Fecha
         </th>
         <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
-          Descripcion
+          Acciones
         </th>
       </tr>
     </thead>
     <tbody class="text-left">
-      {% for report in report_list %}
+      {% for report in report_list reversed %}
       <tr class="border-b border-gray-200 dark:border-gray-700">
-          {% for user in report.docentes.all %}
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-              {{ user }}
-            </th>
-          {% endfor %}
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+            {{ report.docentes }}
+          </th>
           
           <td class="px-6 py-4 bg-gray-300 dark:text-black">
             {{ report.titulo }}
@@ -68,7 +66,7 @@
             {{ report.turno }}
           </td>
           <td class="px-6 py-4 bg-gray-300 text-xl text-center text-orange-400">
-            <a href="">
+            <a href="{% url 'show-report' report.id %}">
               <i class="fa-solid fa-file fa-2xl">
                 <!-- {{ report.archivo }} -->
               </i>
@@ -77,8 +75,7 @@
           <td class="px-14 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
             {{ report.fecha }}
           </td>
-          <td class="px-6 py-4 bg-gray-300 dark:text-black">
-            {{ report.descripcion }}
+          <td class="px-6 py-4 bg-gray-300 dark:text-black text-center">
           </td>
         </tr>
       {% endfor %}
@@ -86,5 +83,15 @@
   </table>
 </div>
 
+<script>
+  $(document).ready(function() {
+
+    var table = $('#example').DataTable({
+        responsive: true
+      })
+      .columns.adjust()
+      .responsive.recalc();
+  });
+</script>
 
 {% endblock content %}

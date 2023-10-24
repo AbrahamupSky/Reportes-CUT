@@ -106,7 +106,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -115,3 +115,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+  "site_title": "ReportesCUT - Admin panel",
+  "site_header": "ReportesCUT - Admin panel",
+  "site_brand": "Panel de Admin",
+  "site_logo": 'media/images/cut.png',
+  "welcome_sign": "Panel de Adminitración - Reportes CUT",
+
+  "navigation": [
+    {
+      "name": "Inicio",  # Nombre del elemento del menú
+      "icon": "fas fa-home",  # Icono de FontAwesome para el elemento del menú
+      "url": "/",  # URL a la que se redirige cuando se hace clic en el elemento del menú
+      "permissions": ["auth.view_user"],  # Permisos requeridos para ver este elemento del menú
+    },
+  ],
+
+  "topmenu_links": [
+    {"name": "Home",  "url": "/inicio/"},
+    {"app": "books"},
+  ],
+}

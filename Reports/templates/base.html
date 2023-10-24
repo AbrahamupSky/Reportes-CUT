@@ -62,20 +62,28 @@
   
   <div class="py-14 p-4">
     {% block content %} {% endblock content %}
+
+    {% include 'components/modals/file-modal.html' %}
   </div>
 
-  {% include 'modals/modal-sesion.html' %}
 
 </body>
 
 <!--TODO FontAwesome -->
 <script src="https://kit.fontawesome.com/12d7ab927d.js" crossorigin="anonymous"></script>
 
-<!-- TODO static JS -->
-
 <!-- TODO Tailwind JS -->
 <script src="https://flowbite.com/docs/docs.js?v=1.8.1a"></script>
 <script src="https://flowbite.com/docs/datepicker.min.js?v=1.8.1a"></script>
 <script src="https://flowbite.com/docs/flowbite.min.js?v=1.8.1a"></script>
+
+<!-- TODO Static JS -->
+<script src="/static/js/index.js"></script>
+
+<!-- TODO jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<!-- TODO SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
