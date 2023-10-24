@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 import calendar
 import time
@@ -7,6 +7,14 @@ from datetime import datetime
 from .models import Docente, Reporte
 from .forms import ReportForm
 
+# ! Eliminar reporte
+def delete_report(request, report_id):
+  report = Reporte.objects.get(pk=report_id)
+  report.delete()
+  time.sleep(.5)
+  return redirect('all_reports')
+
+# ? Subir reportes
 def upload_docs(request):
   submitted = False
   if request.method == 'POST':
@@ -33,15 +41,21 @@ def upload_docs(request):
     'submitted': submitted,
   })
 
+# ? Mostrar 1 solo reporte
 def show_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
-  form = ReportForm(request.POST or None)
+  form = ReportForm(request.POST or None, instance=report)
+  if form.is_valid():
+    form.save()
+    time.sleep(1.5)
+    return redirect('all_reports')
 
   return render(request, 'reports/show_report.html', {
     'report': report,
     'form': form,
   })
 
+# ? Mostrar todos los reportes
 def all_reports(request):
   report_list = Reporte.objects.all()
 
@@ -49,6 +63,7 @@ def all_reports(request):
     'report_list': report_list,
   })
 
+# ? Mostrar página de inicio donde estan los menu
 def inicio(request, year=datetime.now().year, month=datetime.now().strftime("%B")):
   name = 'Abraham'
   month = month.title()
@@ -76,5 +91,6 @@ def inicio(request, year=datetime.now().year, month=datetime.now().strftime("%B"
     'time': time,
   })
 
+# ? Pagina de about
 def about(request):
   return render(request, 'about.html')

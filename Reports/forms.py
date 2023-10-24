@@ -11,11 +11,11 @@ class ReportForm(ModelForm):
 
     widgets = {
       'titulo': forms.TextInput(attrs={'class': 'h-10 border mt-1 rounded px-4 w-full bg-gray-50'}),
-      'academia': forms.Select(choices=Reporte.ACADEMY, attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
-      'curso': forms.Select(choices=Reporte.CURSOS, attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
-      'ciclo': forms.Select(choices=Reporte.CICLOS, attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
-      'evidencia': forms.Select(choices=Reporte.EVIDENCIAS, attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
-      'turno': forms.Select(choices=Reporte.TURNOS, attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
-      'descripcion': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
-      'docentes': forms.Select(attrs={'class': 'px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'}),
+      'academia': forms.Select(choices=Reporte.ACADEMY, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+      'curso': forms.Select(choices=Reporte.CURSOS, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+      'ciclo': forms.Select(choices=Reporte.CICLOS, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+      'evidencia': forms.Select(choices=Reporte.EVIDENCIAS, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+      'turno': forms.Select(choices=Reporte.TURNOS, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+      'descripcion': forms.Textarea(attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none', 'rows': 4}),
+      'docentes': forms.Select(attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
     }

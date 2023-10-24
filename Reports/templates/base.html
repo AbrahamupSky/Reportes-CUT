@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,7 +13,8 @@
     <!-- ? tailwind css -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   
-    <!-- ? Static CSS -->
+    <!-- ? Sweetalert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.min.css">
   
   </head>
 <body>
@@ -62,8 +65,6 @@
   
   <div class="py-14 p-4">
     {% block content %} {% endblock content %}
-
-    {% include 'components/modals/file-modal.html' %}
   </div>
 
 
@@ -78,12 +79,11 @@
 <script src="https://flowbite.com/docs/flowbite.min.js?v=1.8.1a"></script>
 
 <!-- TODO Static JS -->
-<script src="/static/js/index.js"></script>
 
 <!-- TODO jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- TODO SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
 </html>
