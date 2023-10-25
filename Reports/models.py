@@ -114,7 +114,7 @@ class Reporte(models.Model):
   ciclo = models.CharField(max_length=10, choices=CICLOS)
   evidencia = models.CharField(max_length=25, choices=EVIDENCIAS)
   turno = models.CharField(max_length=25, choices=TURNOS)
-  # archivo = models.FileField(upload_to='static/files')
+  archivo = models.FileField(upload_to='static/files', blank=True, null=True)
   fecha = models.DateField('Fecha de creación', auto_now_add=True)
   descripcion = models.TextField('Descripción', blank=True, null=True)
   docentes = models.ForeignKey(Docente, null=True, blank=True, on_delete=models.SET_NULL)
