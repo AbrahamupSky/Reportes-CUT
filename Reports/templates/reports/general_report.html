@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- component -->
+<div class="bg-gray-100 p-4 flex items-center justify-center">
+  <div class="flex justify-center z-50">
+    <div class="bg-white rounded-lg p-6 shadow-lg transform transition-all duration-300" x-show.transition.opacity="showModal">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b-2 border-gray-200 pb-4">
+        <h2 class="text-2xl font-semibold">Generar reporte General</h2>
+      </div>
+      
+      <div class="mt-6 space-y-4">
+        <p class="text-lg text-gray-600">De qué forma quieres generar un nuevo reporte</p>
+        <div class="flex flex-col space-y-4">
+
+          <a href="{% url 'pdf_report' %}" class="flex items-center justify-center gap-2 bg-red-600 text-gray-100 px-4 py-2 rounded-lg hover:bg-red transition duration-300">
+            <i class="fa-solid fa-file-pdf fa-lg"></i>
+            <p class="px-2">Generar PDF</p>
+          </a>
+          
+          <a href="{% url 'text_report' %}" class="flex items-center justify-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+            <i class="fa-regular fa-file-lines fa-lg"></i>
+            <p class="px-2">Generar Texto Plano</p>
+          </a>
+
+          <a href="{% url 'csv_report' %}" class="flex items-center justify-center gap-2 bg-green-700 text-gray-100 px-4 py-2 rounded-lg hover:bg-black transition duration-300">
+            <i class="fa-solid fa-file-csv fa-lg"></i>
+            <p class="px-2">Generar CSV - Excel</p>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+{% endblock %}

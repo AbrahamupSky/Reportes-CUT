@@ -1,11 +1,99 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
-import calendar
+import io
+import csv
 import time
-from calendar import HTMLCalendar
+import calendar
+from .models import Reporte
 from datetime import datetime
-from .models import Docente, Reporte
 from .forms import ReportForm
+from django.conf import settings
+from calendar import HTMLCalendar
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib import utils
+from django.views.generic import View
+from reportlab.lib.pagesizes import letter, landscape
+from django.shortcuts import render, redirect
+from reportlab.lib.utils import ImageReader
+from django.http import HttpResponseRedirect, HttpResponse, FileResponse
+
+# ? Pagina para generar reporte general
+def general_report(request):
+  return render(request, 'reports/general_report.html')
+
+# ? Generar archivo PDF
+def pdf_report(request):
+  buf = io.BytesIO()
+  c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+  textob = c.beginText()
+  textob.setTextOrigin(inch, inch)
+  textob.setFont('Helvetica', 14)
+
+  # ? Asignar el modelo
+  reports = Reporte.objects.all()
+
+  lines = []
+
+  for report in reports:
+    lines.append(report.titulo)
+    lines.append(report.academia)
+    lines.append(report.curso)
+    lines.append(report.ciclo)
+    lines.append(report.docentes.nombres if report.docentes else '')
+    lines.append(report.docentes.apellidos if report.docentes else '')
+    lines.append(report.fecha.strftime('%Y-%m-%d'))
+    lines.append(" ")
+
+  for line in lines:
+    textob.textLine(line)
+
+  image_path = '/static/media/cut.png'  # Ruta de tu imagen
+  img = utils.ImageReader(image_path)
+  c.drawImage(img, 210, 7, width=50, height=50)
+
+  c.drawText(textob)
+  c.showPage()
+  c.save()
+
+  buf.seek(0)
+  return FileResponse(buf, as_attachment=True, filename='report.pdf')
+
+# ? Generar archivo de csv (excel)
+def csv_report(request):
+  response = HttpResponse(content_type='text/csv')
+  response['Content-Disposition'] = 'attachment; filename="reporte.csv"'
+
+  # ? Creae escritor csv
+  writer = csv.writer(response)
+
+  # ? Asignar el modelo
+  reports = Reporte.objects.all()
+
+  # ? Escribir texto de la primer casilla
+  writer.writerow(['Titulo', 'Academia', 'Curso', 'Ciclo', 'Docente', 'Fecha'])
+
+  # ? Ciclar en el modelo
+  for report in reports:
+    # docente_nombre = report.docentes.nombres if report.docentes else ''
+    writer.writerow([report.titulo, report.academia, report.curso, report.ciclo, report.docentes, report.fecha])
+
+  return response
+
+# ? Generar archivo de texto
+def text_report(request):
+  response = HttpResponse(content_type='text/plain')
+  response['Content-Disposition'] = 'attachment; filename="reporte.txt"'
+
+  # ? Asignar el modelo
+  reports = Reporte.objects.all()
+  lines = []
+
+  # ? Ciclar en el modelo
+  for report in reports:
+    lines.append(f'{report.titulo}\n{report.academia}\n{report.curso}\n{report.ciclo}\n{report.docentes}\n{report.fecha}\n\n\n')
+
+
+  response.writelines(lines)
+  return response
 
 # ! Eliminar reporte
 def delete_report(request, report_id):
