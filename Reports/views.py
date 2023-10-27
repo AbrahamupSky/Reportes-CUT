@@ -2,24 +2,14 @@ import io
 import csv
 import time
 import calendar
-from .models import Reporte
+from fpdf import FPDF
+from io import BytesIO
+from .models import Reporte, Docente
 from datetime import datetime
 from .forms import ReportForm
-from django.conf import settings
 from calendar import HTMLCalendar
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib import utils
-from django.views.generic import View
-from reportlab.lib.colors import Color
-from reportlab.lib.pagesizes import letter, landscape, inch, LETTER
 from django.shortcuts import render, redirect
-from reportlab.lib.utils import ImageReader
-from reportlab.graphics.shapes import Line, LineShape, Drawing
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, PageBreak, Image, Spacer, Table, TableStyle)
 
 # ? Pagina para generar reporte general
 def general_report(request):
@@ -27,38 +17,73 @@ def general_report(request):
 
 # ? Generar archivo PDF
 def pdf_report(request):
-  buf = io.BytesIO()
-  c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-  textob = c.beginText()
-  textob.setTextOrigin(inch, inch)
-  textob.setFont('Helvetica', 14)
+  pdf = FPDF(orientation='L', unit='mm', format='A4')
+  pdf.add_page()
 
   # ? Asignar el modelo
-  reports = Reporte.objects.all()
+  reports = Docente.objects.all()
 
-  lines = []
+  for docente in reports:
+    pdf.set_font('helvetica', 'B', 14)
+    pdf.set_text_color(255)
 
-  for report in reports:
-    lines.append(report.titulo)
-    lines.append(report.academia)
-    lines.append(report.curso)
-    lines.append(report.ciclo)
-    lines.append(report.docentes.nombres if report.docentes else '')
-    lines.append(report.docentes.apellidos if report.docentes else '')
-    lines.append(report.fecha.strftime('%Y-%m-%d'))
-    lines.append(" ")
+    # ? Codigo UDG del Docente
+    pdf.cell(w=40, h=15, txt='Codigo UDG', border=1, align='C', fill=True)
+    pdf.set_text_color(0)
+    pdf.multi_cell(w=120, h=15, txt=str(docente.codigoUDG), border=1, align='C', fill=0)
 
-  for line in lines:
-    textob.textLine(line)
+    # ? Nombre Docente
+    pdf.set_text_color(255)
+    pdf.cell(w=40, h=15, txt='Nombre', border=1, align='C', fill=True)
+    pdf.set_text_color(0)
+    pdf.multi_cell(w=120, h=15, txt=f"{docente.nombres} {docente.apellidos}", border=1, align='C', fill=0)
 
-  # page_num = c.getPageNumber()
-  c.drawImage('/static/media/cut.png', 2, 50)
-  c.drawText(textob)
-  c.showPage()
-  c.save()
+    # ? Correo Docente
+    pdf.set_text_color(255)
+    pdf.cell(w=40, h=15, txt='Correo', border=1, align='C', fill=True)
+    pdf.set_text_color(0)
+    pdf.multi_cell(w=120, h=15, txt=str(docente.email), border=1, align='C', fill=0)
 
-  buf.seek(0)
-  return FileResponse(buf, as_attachment=True, filename='report.pdf')
+    pdf.image('static/media/cut.png', 210, 7, 50, 50)
+
+    # ? Titulo tabla
+    pdf.ln(10)
+    pdf.set_fill_color(29, 29, 29)
+    pdf.set_text_color(255)
+    pdf.cell(w=0, h=10, txt="Reporte de Actividades", border=1, ln=1, align='C', fill=True)
+
+    # ? Tabla datos
+    pdf.set_fill_color(50, 50, 50)
+    pdf.set_text_color(255)
+    pdf.set_font('Helvetica', 'B', 10)
+    pdf.cell(w=10, h=8, txt='#', border=1, align='C', fill=True)
+    pdf.cell(w=40, h=8, txt='Id Maestro', border=1, align='C', fill=True)
+    pdf.cell(w=20, h=8, txt='Fecha', border=1, align='C', fill=True)
+    pdf.cell(w=60, h=8, txt='Tipo de reporte', border=1, align='C', fill=True)
+    pdf.multi_cell(w=0, h=8, txt='Nombre Archivo', border=1, align='C', fill=True)
+
+    # ? Asignar el modelo
+    reports = Reporte.objects.all()
+
+    # ? Ciclar en el modelo
+    for report in reports:
+      pdf.set_font('Helvetica', '', 9)
+      pdf.set_text_color(0)
+      pdf.cell(w=10, h=7, txt=str(report.ciclo), border=1, align='C', fill=False)
+      pdf.cell(w=40, h=7, txt=str(report.docentes), border=1, align='C', fill=False)
+      pdf.cell(w=20, h=7, txt=str(report.fecha), border=1, align='C', fill=False)
+      pdf.cell(w=60, h=7, txt=str(report.evidencia), border=1, align='C', fill=False)
+      pdf.multi_cell(w=0, h=8, txt=str(report.titulo), border=1, align='C', fill=False)
+
+  buffer = BytesIO()
+  pdf.output(buffer)
+  pdf_data = buffer.getvalue()
+  
+  return FileResponse(buffer, as_attachment=True, filename='Reporte.pdf')
+
+  # Configurar el encabezado de la respuesta para descargar el archivo
+  # response['Content-Disposition'] = 'attachment; filename="Reporte.pdf"'
+  # return response
 
 # ? Generar archivo de csv (excel)
 def csv_report(request):
@@ -93,7 +118,6 @@ def text_report(request):
   # ? Ciclar en el modelo
   for report in reports:
     lines.append(f'{report.titulo}\n{report.academia}\n{report.curso}\n{report.ciclo}\n{report.docentes}\n{report.fecha}\n\n\n')
-
 
   response.writelines(lines)
   return response
