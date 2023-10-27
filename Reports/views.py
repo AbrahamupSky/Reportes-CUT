@@ -11,10 +11,15 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib import utils
 from django.views.generic import View
-from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.colors import Color
+from reportlab.lib.pagesizes import letter, landscape, inch, LETTER
 from django.shortcuts import render, redirect
 from reportlab.lib.utils import ImageReader
+from reportlab.graphics.shapes import Line, LineShape, Drawing
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
+from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
+from reportlab.platypus import (SimpleDocTemplate, Paragraph, PageBreak, Image, Spacer, Table, TableStyle)
 
 # ? Pagina para generar reporte general
 def general_report(request):
@@ -46,10 +51,8 @@ def pdf_report(request):
   for line in lines:
     textob.textLine(line)
 
-  image_path = '/static/media/cut.png'  # Ruta de tu imagen
-  img = utils.ImageReader(image_path)
-  c.drawImage(img, 210, 7, width=50, height=50)
-
+  # page_num = c.getPageNumber()
+  c.drawImage('/static/media/cut.png', 2, 50)
   c.drawText(textob)
   c.showPage()
   c.save()
