@@ -9,6 +9,7 @@ from datetime import datetime
 from .forms import ReportForm
 from calendar import HTMLCalendar
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 
 # ? Pagina para generar reporte general
@@ -17,73 +18,77 @@ def general_report(request):
 
 # ? Generar archivo PDF
 def pdf_report(request):
-  pdf = FPDF(orientation='L', unit='mm', format='A4')
-  pdf.add_page()
+  res = get_object_or_404(Reporte, pk=1)
+  for res in Reporte.objects.all():
+    if res:
+      # Formato de pagina
+      pdf = FPDF(orientation='L', unit='mm', format='A4')
+      pdf.add_page()
 
-  # ? Asignar el modelo
-  reports = Docente.objects.all()
-
-  for docente in reports:
-    pdf.set_font('helvetica', 'B', 14)
-    pdf.set_text_color(255)
-
-    # ? Codigo UDG del Docente
-    pdf.cell(w=40, h=15, txt='Codigo UDG', border=1, align='C', fill=True)
-    pdf.set_text_color(0)
-    pdf.multi_cell(w=120, h=15, txt=str(docente.codigoUDG), border=1, align='C', fill=0)
-
-    # ? Nombre Docente
-    pdf.set_text_color(255)
-    pdf.cell(w=40, h=15, txt='Nombre', border=1, align='C', fill=True)
-    pdf.set_text_color(0)
-    pdf.multi_cell(w=120, h=15, txt=f"{docente.nombres} {docente.apellidos}", border=1, align='C', fill=0)
-
-    # ? Correo Docente
-    pdf.set_text_color(255)
-    pdf.cell(w=40, h=15, txt='Correo', border=1, align='C', fill=True)
-    pdf.set_text_color(0)
-    pdf.multi_cell(w=120, h=15, txt=str(docente.email), border=1, align='C', fill=0)
-
-    pdf.image('static/media/cut.png', 210, 7, 50, 50)
-
-    # ? Titulo tabla
-    pdf.ln(10)
-    pdf.set_fill_color(29, 29, 29)
-    pdf.set_text_color(255)
-    pdf.cell(w=0, h=10, txt="Reporte de Actividades", border=1, ln=1, align='C', fill=True)
-
-    # ? Tabla datos
-    pdf.set_fill_color(50, 50, 50)
-    pdf.set_text_color(255)
-    pdf.set_font('Helvetica', 'B', 10)
-    pdf.cell(w=10, h=8, txt='#', border=1, align='C', fill=True)
-    pdf.cell(w=40, h=8, txt='Id Maestro', border=1, align='C', fill=True)
-    pdf.cell(w=20, h=8, txt='Fecha', border=1, align='C', fill=True)
-    pdf.cell(w=60, h=8, txt='Tipo de reporte', border=1, align='C', fill=True)
-    pdf.multi_cell(w=0, h=8, txt='Nombre Archivo', border=1, align='C', fill=True)
-
-    # ? Asignar el modelo
-    reports = Reporte.objects.all()
-
-    # ? Ciclar en el modelo
-    for report in reports:
-      pdf.set_font('Helvetica', '', 9)
+      # Informacion del encabezado
+      pdf.set_font('helvetica', 'B', 14)
+      pdf.set_text_color(255)
+      pdf.cell(w=40, h=15, txt='Codigo UDG', border=1, align='C', fill=True)
       pdf.set_text_color(0)
-      pdf.cell(w=10, h=7, txt=str(report.ciclo), border=1, align='C', fill=False)
-      pdf.cell(w=40, h=7, txt=str(report.docentes), border=1, align='C', fill=False)
-      pdf.cell(w=20, h=7, txt=str(report.fecha), border=1, align='C', fill=False)
-      pdf.cell(w=60, h=7, txt=str(report.evidencia), border=1, align='C', fill=False)
-      pdf.multi_cell(w=0, h=8, txt=str(report.titulo), border=1, align='C', fill=False)
+      pdf.multi_cell(w=120, h=15, txt=str(
+        res[res.docentes.codigoUDG]), border=1, align='C', fill=0)
+      pdf.set_text_color(255)
+      pdf.cell(w=40, h=15, txt='Nombre', border=1, align='C', fill=True)
+      pdf.set_text_color(0)
+      pdf.multi_cell(w=120, h=15, txt=str(
+        res[res.docentes.nombres + ' ' + res.docentes.apellidos]), border=1, align='C', fill=0)
+      pdf.set_text_color(255)
+      pdf.cell(w=40, h=15, txt='Correo', border=1, align='C', fill=True)
+      pdf.set_text_color(0)
+      pdf.multi_cell(w=120, h=15, txt=str(
+        res[res.docentes.email]), border=1, align='C', fill=0)
 
-  buffer = BytesIO()
-  pdf.output(buffer)
-  pdf_data = buffer.getvalue()
-  
-  return FileResponse(buffer, as_attachment=True, filename='Reporte.pdf')
+      # Imagen
+      pdf.image('static/media/images/cut.png', 210, 7, 50, 50)
 
-  # Configurar el encabezado de la respuesta para descargar el archivo
-  # response['Content-Disposition'] = 'attachment; filename="Reporte.pdf"'
-  # return response
+      # Titulo tabla
+      pdf.ln(10)
+      pdf.set_fill_color(29, 29, 29)
+      pdf.set_text_color(255)
+      pdf.cell(w=0, h=10, txt="Reporte de Actividades",
+          border=1, ln=1, align='C', fill=True)
+
+      # Tabla datos
+      pdf.set_fill_color(50, 50, 50)
+      pdf.set_text_color(255)
+      pdf.set_font('Helvetica', 'B', 10)
+      pdf.cell(w=10, h=8, txt='#', border=1, align='C', fill=True)
+      pdf.cell(w=40, h=8, txt='Id Maestro', border=1, align='C', fill=True)
+      pdf.cell(w=20, h=8, txt='Fecha', border=1, align='C', fill=True)
+      pdf.cell(w=60, h=8, txt='Tipo de reporte',
+          border=1, align='C', fill=True)
+      pdf.multi_cell(w=0, h=8, txt='Nombre Archivo',
+              border=1, align='C', fill=True)
+
+      # Insertar datos a la tabla
+      for row in Reporte.objects.all().values():
+        pdf.set_font('Helvetica', '', 9)
+        pdf.set_text_color(0)
+        pdf.cell(w=10, h=7, txt=str(
+          row[res.pk]), border=1, align='C', fill=0)
+        pdf.cell(w=40, h=7, txt=str(
+          row[res.docentes.codigoUDG]), border=1, align='C', fill=0)
+        pdf.cell(w=20, h=7, txt=str(
+          row[res.fecha]), border=1, align='C', fill=0)
+        pdf.cell(w=60, h=7, txt=str(
+          row[res.evidencia]), border=1, align='C', fill=0)
+        pdf.multi_cell(
+          w=0, h=7, txt=row[res.titulo], border=1, align='C', fill=0)
+      
+      from io import BytesIO
+      buffer = BytesIO()
+      pdf.output(buffer)
+      buffer.seek(0)
+
+      # Creacion de PDF
+      return FileResponse(buffer, as_attachment=True, filename='Reporte.pdf')
+    else:
+      return HttpResponse("Reporte not found", status=404)
 
 # ? Generar archivo de csv (excel)
 def csv_report(request):
