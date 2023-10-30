@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="" id="loginForm" method="POST">
+  {% csrf_token %}
+  <div class="min-w-screen flex items-center justify-center px-5 py-5">
+    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
+      <div class="md:flex w-full">
+        <div class="w-full md:w-1/2 py-10 px-5 md:px-10">
+          <div class="text-center mb-10 py-8">
+            <h1 class="font-bold text-3xl text-gray-900">Iniciar Sesion</h1>
+          </div>
+          <div>
+            <div class="flex -mx-3">
+              <div class="w-full px-3 mb-5">
+                <label for="" class="text-xs font-semibold px-1">Nombre de Usuario</label>
+                <div class="flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="fa-solid fa-user"></i></div>
+                  <input type="text" name="username" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Ronaldo">
+                </div>
+              </div>
+            </div>
+            <div class="flex -mx-3">
+              <div class="w-full px-3 mb-12">
+                <label for="" class="text-xs font-semibold px-1">Contraseña</label>
+                <div class="flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="fa-solid fa-lock"></i></div>
+                  <input type="password" name="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************">
+                </div>
+              </div>
+            </div>
+            <div class="flex -mx-3">
+              <div class="w-full px-3 mb-5">
+                <button id="inicioSesion" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Iniciar Sesion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block w-1/2 bg-indigo-500 py-28 px-10">
+          <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe normalmente
+    
+    const formData = new FormData(this); // Obtiene los datos del formulario
+    fetch('{% url "login" %}', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': formData.get('csrfmiddlewaretoken') // Agrega el token CSRF a los encabezados
+      }
+    })
+    .then(response => response.json()) // Convierte la respuesta a JSON
+    .then(data => {
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de Sesión Exitoso',
+          timerProgressBar: true,
+          showConfirmButton: false,
+          timer: 1500
+        });
+        // Redirige a la página de inicio después de iniciar sesión exitosamente
+        setTimeout(() => {
+          window.location.href = '{% url "inicio" %}';
+        }, 1500)
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data.message,
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+
+</script>
+
+{% endblock content %}

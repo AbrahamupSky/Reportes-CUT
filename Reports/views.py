@@ -2,7 +2,7 @@ import io
 import csv
 import time
 import calendar
-from fpdf import FPDF
+
 from io import BytesIO
 from .models import Reporte, Docente
 from datetime import datetime
@@ -18,77 +18,7 @@ def general_report(request):
 
 # ? Generar archivo PDF
 def pdf_report(request):
-  res = get_object_or_404(Reporte, pk=1)
-  for res in Reporte.objects.all():
-    if res:
-      # Formato de pagina
-      pdf = FPDF(orientation='L', unit='mm', format='A4')
-      pdf.add_page()
-
-      # Informacion del encabezado
-      pdf.set_font('helvetica', 'B', 14)
-      pdf.set_text_color(255)
-      pdf.cell(w=40, h=15, txt='Codigo UDG', border=1, align='C', fill=True)
-      pdf.set_text_color(0)
-      pdf.multi_cell(w=120, h=15, txt=str(
-        res[res.docentes.codigoUDG]), border=1, align='C', fill=0)
-      pdf.set_text_color(255)
-      pdf.cell(w=40, h=15, txt='Nombre', border=1, align='C', fill=True)
-      pdf.set_text_color(0)
-      pdf.multi_cell(w=120, h=15, txt=str(
-        res[res.docentes.nombres + ' ' + res.docentes.apellidos]), border=1, align='C', fill=0)
-      pdf.set_text_color(255)
-      pdf.cell(w=40, h=15, txt='Correo', border=1, align='C', fill=True)
-      pdf.set_text_color(0)
-      pdf.multi_cell(w=120, h=15, txt=str(
-        res[res.docentes.email]), border=1, align='C', fill=0)
-
-      # Imagen
-      pdf.image('static/media/images/cut.png', 210, 7, 50, 50)
-
-      # Titulo tabla
-      pdf.ln(10)
-      pdf.set_fill_color(29, 29, 29)
-      pdf.set_text_color(255)
-      pdf.cell(w=0, h=10, txt="Reporte de Actividades",
-          border=1, ln=1, align='C', fill=True)
-
-      # Tabla datos
-      pdf.set_fill_color(50, 50, 50)
-      pdf.set_text_color(255)
-      pdf.set_font('Helvetica', 'B', 10)
-      pdf.cell(w=10, h=8, txt='#', border=1, align='C', fill=True)
-      pdf.cell(w=40, h=8, txt='Id Maestro', border=1, align='C', fill=True)
-      pdf.cell(w=20, h=8, txt='Fecha', border=1, align='C', fill=True)
-      pdf.cell(w=60, h=8, txt='Tipo de reporte',
-          border=1, align='C', fill=True)
-      pdf.multi_cell(w=0, h=8, txt='Nombre Archivo',
-              border=1, align='C', fill=True)
-
-      # Insertar datos a la tabla
-      for row in Reporte.objects.all().values():
-        pdf.set_font('Helvetica', '', 9)
-        pdf.set_text_color(0)
-        pdf.cell(w=10, h=7, txt=str(
-          row[res.pk]), border=1, align='C', fill=0)
-        pdf.cell(w=40, h=7, txt=str(
-          row[res.docentes.codigoUDG]), border=1, align='C', fill=0)
-        pdf.cell(w=20, h=7, txt=str(
-          row[res.fecha]), border=1, align='C', fill=0)
-        pdf.cell(w=60, h=7, txt=str(
-          row[res.evidencia]), border=1, align='C', fill=0)
-        pdf.multi_cell(
-          w=0, h=7, txt=row[res.titulo], border=1, align='C', fill=0)
-      
-      from io import BytesIO
-      buffer = BytesIO()
-      pdf.output(buffer)
-      buffer.seek(0)
-
-      # Creacion de PDF
-      return FileResponse(buffer, as_attachment=True, filename='Reporte.pdf')
-    else:
-      return HttpResponse("Reporte not found", status=404)
+  return HttpResponse("Reporte not found", status=404)
 
 # ? Generar archivo de csv (excel)
 def csv_report(request):
