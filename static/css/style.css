@@ -1,0 +1,12 @@
+.dataTables_filter {
+  display: none;
+}
+
+thead {
+  top: 0;
+  position: sticky;
+}
+
+.ui-bottonset {
+  margin-bottom: 10px;
+}

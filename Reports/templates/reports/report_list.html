@@ -2,84 +2,133 @@
 
 {% block content %} 
 
-<div class="p-6 bg-gray-100 flex items-center justify-center">
-  <div class="container">
+<!-- <div class=">
+  <div>
     <div>
       <h2 class="font-semibold text-xl text-gray-600 mb-6">Revision de Archivos</h2>
-      
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-start text-gray-500 dark:text-gray-400" id="example">
+      <div class="flex flex-col space-x-20 items-center mr-auto ml-auto">
+        <label>Buscar:
+            <input type="search" class="px-4 py-2 text-lg border rounded-md" id="search" placeholder="Buscar...">
+        </label>
+      </div>
+        <table class="text-start text-gray-500 dark:text-gray-400" id="example" style="text-align: center">
           <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
             <tr>
-              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Docente
-              </th>
-              <th scope="col" class="px-24 py-3 bg-gray-300 dark:text-black">
-                Titulo
-              </th>
-              <th scope="col" class="px-10 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Academia
-              </th>
-              <th scope="col" class="px-24 py-3 bg-gray-300 dark:text-black">
-                Materia
-              </th>
-              <th scope="col" class="px-8 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Ciclo
-              </th>
-              <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
-                Tipo de Evidencia
-              </th>
-              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Turno
-              </th>
-              <th scope="col" class="px-6 py-3 bg-gray-300 dark:text-black">
-                Archivo
-              </th>
-              <th scope="col" class="px-10 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Fecha
-              </th>
+              <th style="width: auto" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">Docente</th>
+              <th style="width: auto" class="px-24 py-3 bg-gray-300 dark:text-black">Titulo</th>
+              <th style="width: auto" class="px-10 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">Academia</th>
+              <th style="width: auto" class="px-24 py-3 bg-gray-300 dark:text-black">Materia</th>
+              <th style="width: auto" class="px-8 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">Ciclo</th>
+              <th style="width: auto" class="px-6 py-3 bg-gray-300 dark:text-black">Tipo de Evidencia</th>
+              <th style="width: auto" class="px-6 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">Turno</th>
+              <th style="width: auto" class="px-6 py-3 bg-gray-300 dark:text-black">Archivo</th>
+              <th style="width: auto" class="px-10 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white">Fecha</th>
             </tr>
           </thead>
-          <tbody class="text-left">
-            {% for report in report_list reversed %}
-            <tr class="border-b border-gray-200 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  {{ report.docentes }}
-                </th>
-                
-                <td class="px-6 py-4 bg-gray-300 dark:text-black">
-                  {{ report.titulo }}
-                </td>
-                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                  {{ report.academia }}
-                </td>
-                <td class="px-6 py-4 bg-gray-300 dark:text-black">
-                  {{ report.curso }}
-                </td>
-                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                  {{ report.ciclo }}
-                </td>
-                <td class="px-6 py-4 bg-gray-300 dark:text-black">
-                  {{ report.evidencia }}
-                </td>
-                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
-                  {{ report.turno }}
-                </td>
-                <td class="px-6 py-4 bg-gray-300 text-xl text-center text-orange-400">
-                  <a href="{% url 'show-report' report.id %}">
-                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                  </a>
-                </td>
-                <td class="px-3 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
-                  {{ report.fecha }}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+          <tbody>
+          {% for report in report_list reversed %}
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              {{ report.docentes }}
+            </th>
+              
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.titulo }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
+              {{ report.academia }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.curso }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
+              {{ report.ciclo }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.evidencia }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 dark:text-white">
+              {{ report.turno }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 text-xl text-center text-orange-400">
+              <a href="{% url 'show-report' report.id %}">
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+              </a>
+            </td>
+            <td class="px-3 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.fecha }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
+</div> -->
+
+<div class="bg-gray-100 p-6">
+  <div class="container max-w-screen-lg mx-auto">
+    <h2 class="font-semibold text-xl text-gray-600 mb-6">Revision de Archivos</h2>
+  </div>
+  <div class="flex flex-col space-x-20 items-center mr-auto ml-auto">
+    <label>Buscar:
+      <input type="search" class="px-4 py-2 text-lg border rounded-md" id="search" placeholder="Buscar...">
+    </label>
+  </div>
+  <div class="flex flex-wrap justify-center">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-md text-left text-gray-500 dark:text-gray-400" id="example">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Docente</th>
+            <th scope="col" class="px-6 py-3">Titulo</th>
+            <th scope="col" class="px-6 py-3">Academia</th>
+            <th scope="col" class="px-6 py-3">Materia</th>
+            <th scope="col" class="px-6 py-3">Ciclo</th>
+            <th scope="col" class="px-6 py-3">Tipo de Evidencia</th>
+            <th scope="col" class="px-6 py-3">Turno</th>
+            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3">Archivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for report in report_list reversed %}
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              {{ report.docentes }}
+            </th>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.titulo }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.academia }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.curso }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.ciclo }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.evidencia }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.turno }}
+            </td>
+            <td class="px-6 py-4 bg-gray-300 dark:text-black">
+              {{ report.fecha }}
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-center dark:text-white">
+              <a href="{% url 'show-report' report.id %}">
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
 
 {% endblock content %}
