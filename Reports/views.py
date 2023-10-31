@@ -10,9 +10,11 @@ from .forms import ReportForm
 from calendar import HTMLCalendar
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 
 # ? Pagina para generar reporte general
+@login_required(login_url='login')
 def general_report(request):
   return render(request, 'reports/general_report.html')
 
@@ -58,6 +60,7 @@ def text_report(request):
   return response
 
 # ! Eliminar reporte
+@login_required(login_url='login')
 def delete_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
   report.delete()
@@ -65,6 +68,7 @@ def delete_report(request, report_id):
   return redirect('all_reports')
 
 # ? Subir reportes
+@login_required(login_url='login')
 def upload_docs(request):
   submitted = False
   if request.method == 'POST':
@@ -92,6 +96,7 @@ def upload_docs(request):
   })
 
 # ? Mostrar 1 solo reporte
+@login_required(login_url='login')
 def show_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
   form = ReportForm(request.POST or None, instance=report)
@@ -106,6 +111,7 @@ def show_report(request, report_id):
   })
 
 # ? Mostrar todos los reportes
+@login_required(login_url='login')
 def all_reports(request):
   report_list = Reporte.objects.all()
 
@@ -114,6 +120,7 @@ def all_reports(request):
   })
 
 # ? Mostrar página de inicio donde estan los menu
+@login_required(login_url='login')
 def inicio(request, year=datetime.now().year, month=datetime.now().strftime("%B")):
   name = 'Abraham'
   month = month.title()
