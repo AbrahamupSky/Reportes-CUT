@@ -2,63 +2,25 @@ import io
 import csv
 import time
 import calendar
-from .models import Reporte
+
+from io import BytesIO
+from .models import Reporte, Docente
 from datetime import datetime
 from .forms import ReportForm
-from django.conf import settings
 from calendar import HTMLCalendar
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib import utils
-from django.views.generic import View
-from reportlab.lib.colors import Color
-from reportlab.lib.pagesizes import letter, landscape, inch, LETTER
 from django.shortcuts import render, redirect
-from reportlab.lib.utils import ImageReader
-from reportlab.graphics.shapes import Line, LineShape, Drawing
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, PageBreak, Image, Spacer, Table, TableStyle)
 
 # ? Pagina para generar reporte general
+@login_required(login_url='login')
 def general_report(request):
   return render(request, 'reports/general_report.html')
 
 # ? Generar archivo PDF
 def pdf_report(request):
-  buf = io.BytesIO()
-  c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-  textob = c.beginText()
-  textob.setTextOrigin(inch, inch)
-  textob.setFont('Helvetica', 14)
-
-  # ? Asignar el modelo
-  reports = Reporte.objects.all()
-
-  lines = []
-
-  for report in reports:
-    lines.append(report.titulo)
-    lines.append(report.academia)
-    lines.append(report.curso)
-    lines.append(report.ciclo)
-    lines.append(report.docentes.nombres if report.docentes else '')
-    lines.append(report.docentes.apellidos if report.docentes else '')
-    lines.append(report.fecha.strftime('%Y-%m-%d'))
-    lines.append(" ")
-
-  for line in lines:
-    textob.textLine(line)
-
-  # page_num = c.getPageNumber()
-  c.drawImage('/static/media/cut.png', 2, 50)
-  c.drawText(textob)
-  c.showPage()
-  c.save()
-
-  buf.seek(0)
-  return FileResponse(buf, as_attachment=True, filename='report.pdf')
+  return HttpResponse("Reporte not found", status=404)
 
 # ? Generar archivo de csv (excel)
 def csv_report(request):
@@ -94,11 +56,11 @@ def text_report(request):
   for report in reports:
     lines.append(f'{report.titulo}\n{report.academia}\n{report.curso}\n{report.ciclo}\n{report.docentes}\n{report.fecha}\n\n\n')
 
-
   response.writelines(lines)
   return response
 
 # ! Eliminar reporte
+@login_required(login_url='login')
 def delete_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
   report.delete()
@@ -106,6 +68,7 @@ def delete_report(request, report_id):
   return redirect('all_reports')
 
 # ? Subir reportes
+@login_required(login_url='login')
 def upload_docs(request):
   submitted = False
   if request.method == 'POST':
@@ -133,6 +96,7 @@ def upload_docs(request):
   })
 
 # ? Mostrar 1 solo reporte
+@login_required(login_url='login')
 def show_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
   form = ReportForm(request.POST or None, instance=report)
@@ -147,6 +111,7 @@ def show_report(request, report_id):
   })
 
 # ? Mostrar todos los reportes
+@login_required(login_url='login')
 def all_reports(request):
   report_list = Reporte.objects.all()
 
@@ -155,6 +120,7 @@ def all_reports(request):
   })
 
 # ? Mostrar página de inicio donde estan los menu
+@login_required(login_url='login')
 def inicio(request, year=datetime.now().year, month=datetime.now().strftime("%B")):
   name = 'Abraham'
   month = month.title()
