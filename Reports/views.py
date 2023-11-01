@@ -4,7 +4,7 @@ import time
 import calendar
 
 from io import BytesIO
-from .models import Reporte, Docente
+from .models import Reporte
 from datetime import datetime
 from .forms import ReportForm
 from calendar import HTMLCalendar
@@ -74,6 +74,8 @@ def upload_docs(request):
   if request.method == 'POST':
     form = ReportForm(request.POST)
     if form.is_valid():
+      report = form.save(commit=False)
+      report.docentes = request.user
       form.save()
       time.sleep(1.5)
       return HttpResponseRedirect('/upload?submitted=True')
@@ -115,8 +117,19 @@ def show_report(request, report_id):
 def all_reports(request):
   report_list = Reporte.objects.all()
 
-  return render(request, 'reports/report_list.html', {
+  return render(request, 'reports/general_report.html', {
     'report_list': report_list,
+  })
+
+# ? Mostrar todos los reportes de un solo maestro
+@login_required(login_url='login')
+def specific_reports(request):
+  # report_list = Reporte.objects.all()
+  logged_user = request.user
+  reports = Reporte.objects.filter(docentes=logged_user)
+
+  return render(request, 'reports/report_list.html', {
+    'reports': reports,
   })
 
 # ? Mostrar página de inicio donde estan los menu

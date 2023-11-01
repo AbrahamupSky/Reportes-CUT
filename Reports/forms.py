@@ -1,7 +1,6 @@
 from django import forms
 from django.forms import ModelForm
 
-from Reports.admin import DocenteAdmin
 from .models import Reporte
 
 class ReportForm(ModelForm):

@@ -2,14 +2,14 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 
-class Docente(models.Model):
-  codigoUDG = models.IntegerField(primary_key=True)
-  nombres = models.CharField(max_length=100)
-  apellidos = models.CharField(max_length=100)
-  email = models.EmailField('Email del docente', max_length=100)
+# class Docente(models.Model):
+#   codigoUDG = models.IntegerField(primary_key=True)
+#   nombres = models.CharField(max_length=100)
+#   apellidos = models.CharField(max_length=100)
+#   email = models.EmailField('Email del docente', max_length=100)
 
-  def __str__(self):
-    return self.nombres + ' ' + self.apellidos
+#   def __str__(self):
+#     return self.nombres + ' ' + self.apellidos
 
 class Reporte(models.Model):
   CICLOS = (
@@ -117,8 +117,7 @@ class Reporte(models.Model):
   archivo = models.FileField(upload_to='static/files', blank=True, null=True)
   fecha = models.DateField('Fecha de creación', auto_now_add=True)
   descripcion = models.TextField('Descripción', blank=True, null=True)
-  docentes = models.ForeignKey(Docente, null=True, blank=True, on_delete=models.SET_NULL)
-  jefe_departamento = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+  docentes = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.titulo
+    return self.titulo + ' por ' + self.docentes.username

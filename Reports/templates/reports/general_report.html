@@ -1,40 +1,64 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
-<!-- component -->
-<div class="bg-gray-100 p-4 flex items-center justify-center">
-  <div class="flex justify-center z-50">
-    <div class="bg-white rounded-lg p-6 shadow-lg transform transition-all duration-300" x-show.transition.opacity="showModal">
-      <!-- Modal Header -->
-      <div class="flex justify-between items-center border-b-2 border-gray-200 pb-4">
-        <h2 class="text-2xl font-semibold">Generar reporte General</h2>
-      </div>
-      
-      <div class="mt-6 space-y-4">
-        <p class="text-lg text-gray-600">De qué forma quieres generar un nuevo reporte</p>
-        <div class="flex flex-col space-y-4">
-
-          <a href="{% url 'pdf_report' %}" class="flex items-center justify-center gap-2 bg-red-600 text-gray-100 px-4 py-2 rounded-lg hover:bg-red transition duration-300">
-            <i class="fa-solid fa-file-pdf fa-lg"></i>
-            <p class="px-2">Generar PDF</p>
-          </a>
-          
-          <a href="{% url 'text_report' %}" class="flex items-center justify-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-            <i class="fa-regular fa-file-lines fa-lg"></i>
-            <p class="px-2">Generar Texto Plano</p>
-          </a>
-
-          <a href="{% url 'csv_report' %}" class="flex items-center justify-center gap-2 bg-green-700 text-gray-100 px-4 py-2 rounded-lg hover:bg-black transition duration-300">
-            <i class="fa-solid fa-file-csv fa-lg"></i>
-            <p class="px-2">Generar CSV - Excel</p>
-          </a>
-
-        </div>
-      </div>
+{% block content %} 
+<div class="bg-gray-100 p-6">
+  <div class="container max-w-screen-lg mx-auto">
+    <h2 class="font-semibold text-xl text-gray-600 mb-6">Revision de Archivos</h2>
+  </div>
+  <div class="flex flex-col space-x-20 items-center mr-auto ml-auto">
+    <label>Buscar:
+      <input type="search" class="px-4 py-2 text-lg border rounded-md" id="search" placeholder="Buscar...">
+    </label>
+  </div>
+  <div class="flex flex-wrap justify-center">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-md text-left text-gray-500 dark:text-gray-400" id="example">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Docente</th>
+            <th scope="col" class="px-6 py-3">Titulo</th>
+            <th scope="col" class="px-6 py-3">Academia</th>
+            <th scope="col" class="px-6 py-3">Materia</th>
+            <th scope="col" class="px-6 py-3">Ciclo</th>
+            <th scope="col" class="px-6 py-3">Tipo de Evidencia</th>
+            <th scope="col" class="px-6 py-3">Turno</th>
+            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3">Archivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for report in report_list reversed %}
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              {{ report.docentes }}
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-300 dark:text-black">
+              {{ report.titulo }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.academia }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-300 dark:text-black">
+              {{ report.curso }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.ciclo }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-300 dark:text-black">
+              {{ report.evidencia }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-50 dark:bg-gray-800 text-left dark:text-white">
+              {{ report.turno }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap bg-gray-300 dark:text-black">
+              {{ report.fecha }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 
-{% endblock %}
+{% endblock content %}

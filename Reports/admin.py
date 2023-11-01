@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Docente, Reporte
+from .models import Reporte
 
 # admin.site.register(Docente)
 # admin.site.register(Reporte)
@@ -10,9 +10,9 @@ class ReporteAdmin(admin.ModelAdmin):
   ordering = ('-fecha', )
   search_fields = ('titulo', 'academia', 'curso', 'docentes')
 
-@admin.register(Docente)
-class DocenteAdmin(admin.ModelAdmin):
-  list_display = ['codigoUDG', 'nombres', 'apellidos', 'email']
-  search_fields = ('codigoUDG', 'nombres', 'apellidos', 'email')
-  list_filter = ('codigoUDG', 'nombres', 'apellidos')
-  ordering = ('-codigoUDG', )
+# @admin.register(Docente)
+# class DocenteAdmin(admin.ModelAdmin):
+#   list_display = ['codigoUDG', 'nombres', 'apellidos', 'email']
+#   search_fields = ('codigoUDG', 'nombres', 'apellidos', 'email')
+#   list_filter = ('codigoUDG', 'nombres', 'apellidos')
+#   ordering = ('-codigoUDG', )
