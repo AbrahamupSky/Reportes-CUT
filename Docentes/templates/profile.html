@@ -22,7 +22,7 @@
                 <label for="" class="text-xs font-semibold px-1">Username</label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                  <input type="email" value="{{ user.username }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                  <input type="text" value="{{ user.username }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
                 </div>
               </div>
             </div>
@@ -31,14 +31,14 @@
                 <label for="" class="text-xs font-semibold px-1">Nombres</label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                  <input type="email" value="{{ user.first_name }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                  <input type="text" value="{{ user.first_name }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
                 </div>
               </div>
               <div class="w-full px-3 mb-5">
                 <label for="" class="text-xs font-semibold px-1">Apellidos</label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                  <input type="email" value="{{ user.last_name }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                  <input type="text" value="{{ user.last_name }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
                 </div>
               </div>
             </div>
@@ -47,18 +47,26 @@
                 <label for="" class="text-xs font-semibold px-1">Email</label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                  <input type="email" value="{{ user.email }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                  <input type="text" value="{{ user.email }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
                 </div>
               </div>
               <div class="w-4/7 px-3 mb-5">
                 <label for="" class="text-xs font-semibold px-1">Código UDG</label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                  <input type="text" name="codigoUDG" value="{{ form.codigoUDG.value }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                  <input type="text" name="codigoUDG" value="{{ user.codigoUDG }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
                 </div>
               </div>
             </div>
-            
+            <div class="flex -mx-3">
+              <div class="w-full px-3 mb-5">
+                <label for="" class="text-xs font-semibold px-1">Rol</label>
+                <div class="flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                  <input type="text" value="{{ user.rol }}" class="w-full -ml-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" disabled>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
