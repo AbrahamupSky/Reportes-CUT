@@ -17,5 +17,5 @@ class ReportForm(ModelForm):
       'turno': forms.Select(choices=Reporte.TURNOS, attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
       'descripcion': forms.Textarea(attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none', 'rows': 4}),
       'docentes': forms.Select(attrs={'class': 'px-4 w-full text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
-      # 'archivo': forms.ClearableFileInput(attrs={'class': 'sr-only', 'type': 'file'}),
+      'archivo': forms.FileInput(attrs={'class': 'cursor-pointer block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-400 file:border-0 file:bg-gray-100 file:mr-4 file:py-2 file:px-4 dark:file:text-gray-400', 'type': 'file', 'id': 'file_input'}),
     }

@@ -65,7 +65,7 @@ def delete_report(request, report_id):
   report = Reporte.objects.get(pk=report_id)
   report.delete()
   time.sleep(.5)
-  return redirect('all_reports')
+  return redirect('specific_reports')
 
 # ? Subir reportes
 @login_required(login_url='login')
@@ -105,7 +105,7 @@ def show_report(request, report_id):
   if form.is_valid():
     form.save()
     time.sleep(1.5)
-    return redirect('all_reports')
+    return redirect('specific_reports')
 
   return render(request, 'reports/show_report.html', {
     'report': report,
