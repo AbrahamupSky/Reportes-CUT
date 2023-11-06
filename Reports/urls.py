@@ -13,7 +13,4 @@ urlpatterns = [
   path('upload/', views.upload_docs, name='upload_docs'),
   path('delete_report/<report_id>', views.delete_report, name='delete-report'),
   path('general_report', views.general_report, name='general_report'),
-  path('text_report', views.text_report, name='text_report'),
-  path('csv_report', views.csv_report, name='csv_report'),
-  path('pdf_report', views.pdf_report, name='pdf_report'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

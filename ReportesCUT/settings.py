@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-^h1i_uig%n-qk)2k8!1hjm%4jik#t5nj02uyka7g&=p=wdfz+r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -98,7 +98,7 @@ AUTH_USER_MODEL = 'Docentes.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'america/Mexico_City'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 

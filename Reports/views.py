@@ -18,47 +18,6 @@ from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 def general_report(request):
   return render(request, 'reports/general_report.html')
 
-# ? Generar archivo PDF
-def pdf_report(request):
-  return HttpResponse("Reporte not found", status=404)
-
-# ? Generar archivo de csv (excel)
-def csv_report(request):
-  response = HttpResponse(content_type='text/csv')
-  response['Content-Disposition'] = 'attachment; filename="reporte.csv"'
-
-  # ? Creae escritor csv
-  writer = csv.writer(response)
-
-  # ? Asignar el modelo
-  reports = Reporte.objects.all()
-
-  # ? Escribir texto de la primer casilla
-  writer.writerow(['Titulo', 'Academia', 'Curso', 'Ciclo', 'Docente', 'Fecha'])
-
-  # ? Ciclar en el modelo
-  for report in reports:
-    # docente_nombre = report.docentes.nombres if report.docentes else ''
-    writer.writerow([report.titulo, report.academia, report.curso, report.ciclo, report.docentes, report.fecha])
-
-  return response
-
-# ? Generar archivo de texto
-def text_report(request):
-  response = HttpResponse(content_type='text/plain')
-  response['Content-Disposition'] = 'attachment; filename="reporte.txt"'
-
-  # ? Asignar el modelo
-  reports = Reporte.objects.all()
-  lines = []
-
-  # ? Ciclar en el modelo
-  for report in reports:
-    lines.append(f'{report.titulo}\n{report.academia}\n{report.curso}\n{report.ciclo}\n{report.docentes}\n{report.fecha}\n\n\n')
-
-  response.writelines(lines)
-  return response
-
 # ! Eliminar reporte
 @login_required(login_url='login')
 def delete_report(request, report_id):
