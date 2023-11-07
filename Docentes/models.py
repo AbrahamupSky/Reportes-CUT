@@ -34,8 +34,17 @@ class CustomUser(AbstractUser):
     blank=True,
     help_text=_('Specific permissions for this user.'),
     related_name='custom_user_permissions',  # Nombre de acceso inverso único para CustomUser.user_permissions
-    related_query_name='user',
+    related_query_name='user'
   )
+
+  def save(self, *args, **kwargs):
+    # Llama al método save del modelo base para guardar el usuario en la base de datos
+    super(CustomUser, self).save(*args, **kwargs)
+
+    # Si el rol es "Jefe de Departamento", asigna el grupo "superuser" al usuario
+    if self.rol == 'Jefe de Departamento':
+      superuser_group, created = Group.objects.get_or_create(name='superuser')
+      self.groups.add(superuser_group)
 
   def __str__(self):
     return self.username
