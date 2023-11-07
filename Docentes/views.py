@@ -59,6 +59,7 @@ def register_user(request):
             user = form.save(commit=False)
             if user.rol == 'Jefe de Departamento':
                 user.is_superuser = True
+                user.is_staff = True
                 user.save()
                 
                 # Agregar permisos para acceder al panel de administración
