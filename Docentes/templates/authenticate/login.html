@@ -46,9 +46,9 @@
 
 <script>
   document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe normalmente
+    event.preventDefault() // Evita que el formulario se envíe normalmente
     
-    const formData = new FormData(this); // Obtiene los datos del formulario
+    const formData = new FormData(this) // Obtiene los datos del formulario
     fetch('{% url "login" %}', {
       method: 'POST',
       body: formData,
@@ -65,23 +65,23 @@
           timerProgressBar: true,
           showConfirmButton: false,
           timer: 1500
-        });
+        })
         // Redirige a la página de inicio después de iniciar sesión exitosamente
         setTimeout(() => {
-          window.location.href = '{% url "inicio" %}';
+          window.location.href = '{% url "inicio" %}'
         }, 1500)
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: data.message,
-        });
+        })
       }
     })
     .catch(error => {
-      console.error('Error:', error);
-    });
-  });
+      console.error('Error:', error)
+    })
+  })
 
 </script>
 

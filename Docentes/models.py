@@ -4,16 +4,13 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class CustomUser(AbstractUser):
   ROLES = (
-    ('Jefe de Departamento', 'Jefe de Departamento'),
-    ('Maestro', 'Maestro'),
-    ('Presidente de Academia (Ingenieria de Software)', 'Presidente de Academia (Ingenieria de Software)'),
-    ('Presidente de Academia (Programacion Avanzada)', 'Presidente de Academia (Programacion Avanzada)'),
-    ('Presidente de Academia(Gestion de Datos)', 'Presidente de Academia(Gestion de Datos)'),
-    ('Presidente de Academia(Gestion de Tecnologias)', 'Presidente de Academia(Gestion de Tecnologias)'),
+    ('Administrador', 'Administrador'),
+    ('Operador', 'Operador'),
+    ('Técnico', 'Técnico'),
   )
   
   codigoUDG = models.CharField(max_length=100)
-  rol = models.CharField(max_length=100, choices=ROLES, default='Jefe de Departamento')
+  rol = models.CharField(max_length=100, choices=ROLES)
 
   # Especifica los related_name para evitar conflictos en los accesos inversos
   groups = models.ManyToManyField(
@@ -38,13 +35,14 @@ class CustomUser(AbstractUser):
   )
 
   def save(self, *args, **kwargs):
-    # Llama al método save del modelo base para guardar el usuario en la base de datos
     super(CustomUser, self).save(*args, **kwargs)
 
-    # Si el rol es "Jefe de Departamento", asigna el grupo "superuser" al usuario
-    if self.rol == 'Jefe de Departamento':
-      superuser_group, created = Group.objects.get_or_create(name='superuser')
-      self.groups.add(superuser_group)
+    has_superuser_permission = self.user_permissions.filter(codename='superuser').exists()
+
+    # Si el rol es "Administrador", asigna el grupo "admin" al usuario
+    if self.rol == 'Administrador':
+      staff_permission = Permission.objects.get(codename='change_user')  # Asegúrate de que el nombre del permiso sea correcto
+      self.user_permissions.add(staff_permission)
 
   def __str__(self):
     return self.username

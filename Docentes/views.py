@@ -40,7 +40,6 @@ def login_user(request):
 
     # Si la autenticación con CustomUser tiene éxito, iniciar sesión y responder con éxito
     login(request, user_custom)
-    time.sleep(1.5)
     return JsonResponse({'success': True, 'message': 'Inicio de sesión exitoso.'})
 
   else:
@@ -75,6 +74,7 @@ def register_user(request):
             return redirect('register_user')
     else:
         form = UserRegisterForm()
+    time.sleep(1.5)
 
     return render(request, 'authenticate/register_user.html', {
         'form': form

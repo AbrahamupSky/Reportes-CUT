@@ -25,7 +25,7 @@ class UserRegisterForm(UserCreationForm):
     user.email = self.cleaned_data['email']
     user.first_name = self.cleaned_data['nombre']
     user.last_name = self.cleaned_data['apellido']
-    user.codigoUDG = self.cleaned_data['codigoUDG']  # Usar 'codigoUDG' en lugar de 'udg'
+    user.codigoUDG = self.cleaned_data['codigoUDG']
     user.rol = self.cleaned_data['rol']
 
     if commit:

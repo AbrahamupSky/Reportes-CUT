@@ -5,10 +5,10 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportes CUT</title>
+    <title>Gruas Perez</title>
   
      <!-- * Favicon   -->
-    <link rel="icon" href="/static/media/favicon.ico">
+    <link rel="icon" href="/static/media/Logo.ico">
   
     <!-- ? Tailwind CSS   -->
     <script rel="stylesheet" src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
@@ -30,13 +30,13 @@
 
         {% if user.is_authenticated %}
         <a href="{% url 'inicio' %}" class="flex items-center">
-          <img src="/static/media/cut.png" class="h-10 mr-3" alt="CUT Logo">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Reportes CUT</span>
+          <img src="/static/media/logo.png" class="h-10 mr-3" alt="Gruas Perez Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Gruas Perez</span>
         </a>
         {% else %}
         <a href="{% url 'login' %}" class="flex items-center">
-          <img src="/static/media/cut.png" class="h-10 mr-3" alt="CUT Logo">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Reportes CUT</span>
+          <img src="/static/media/logo.png" class="h-10 mr-3" alt="Gruas Perez Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Gruas Perez</span>
         </a>
         {% endif %}
 

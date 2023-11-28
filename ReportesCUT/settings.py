@@ -126,8 +126,9 @@ JAZZMIN_SETTINGS = {
   "site_title": "ReportesCUT - Admin panel",
   "site_header": "ReportesCUT - Admin panel",
   "site_brand": "Panel de Admin",
-  "site_logo": 'media/images/cut.png',
-  "welcome_sign": "Panel de Adminitración - Reportes CUT",
+  "site_logo": 'media/miniLogouwu.png',
+  "site_logo_classes": "img-square",
+  "welcome_sign": "Panel de Adminitración - Gruas Perez",
 
   "navigation": [
     {
@@ -139,7 +140,7 @@ JAZZMIN_SETTINGS = {
   ],
 
   "topmenu_links": [
-    {"name": "Home",  "url": "/inicio/"},
+    {"name": "Inicio",  "url": "/inicio/"},
     {"app": "books"},
   ],
 }
